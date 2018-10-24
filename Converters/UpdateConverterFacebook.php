@@ -3,7 +3,6 @@
 namespace Buffer\UpdateConverters;
 
 use MongoDB\BSON\UTCDateTime;
-use MongoDB\BSON\ObjectId;
 
 class UpdateConverterFacebook implements NativeUpdateConverter
 {
