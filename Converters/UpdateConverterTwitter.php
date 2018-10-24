@@ -36,36 +36,36 @@ class UpdateConverterTwitter implements NativeUpdateConverter
         return $updateAttrs;
     }
 
-    public static function setRetweetData($status)
+    public static function setRetweetData($retweetedStatus)
     {
 
-        $text = self::getStatusText($status);
-        $url = "https://twitter.com/" . $status->user->screen_name . "/status/" . $status->id;
+        $text = self::getStatusText($retweetedStatus);
+        $url = "https://twitter.com/" . $retweetedStatus->user->screen_name . "/status/" . $retweetedStatus->id;
 
         $retweet = [
-            'user_id' => $status->user->id,
-            'tweet_id' => $status->id_str,
-            'username' => $status->user->screen_name,
+            'user_id' => $retweetedStatus->user->id,
+            'tweet_id' => $retweetedStatus->id_str,
+            'username' => $retweetedStatus->user->screen_name,
             'url' => $url,
-            'created_at' => strtotime($status->created_at),
-            'created_at_string' => $status->created_at,
-            'profile_name' => $status->user->name,
+            'created_at' => strtotime($retweetedStatus->created_at),
+            'created_at_string' => $retweetedStatus->created_at,
+            'profile_name' => $retweetedStatus->user->name,
             'text' => $text,
             'avatars' => [
-                'http' => $status->user->profile_image_url,
-                'https' => $status->user->profile_image_url_https
+                'http' => $retweetedStatus->user->profile_image_url,
+                'https' => $retweetedStatus->user->profile_image_url_https
             ]
         ];
 
 
-        if (!is_null($status['comment'])) {
-            $retweet['comment'] = $status['comment'];
+        if (!empty($retweetedStatus->comment)) {
+            $retweet['comment'] = $retweetedStatus->comment;
         }
 
         return $retweet;
     }
 
-    private function getStatistics($status)
+    private static function getStatistics($status)
     {
         $recentStatus = strtotime($status->created_at) > (time() - (60 * 60 * 24));
 
@@ -85,20 +85,19 @@ class UpdateConverterTwitter implements NativeUpdateConverter
         ];
     }
 
-    private function getStatusText($status)
+    private static function getStatusText($status)
     {
         return property_exists($status, 'full_text') ? $status->full_text : $status->text;
     }
 
-    private function getServiceStatus($status)
+    private static function getServiceStatus($status)
     {
-        return $this->isReply($status) ? 'service_reply' : 'service';
+        return self::isReply($status) ? 'service_reply' : 'service';
     }
 
-    private function isReply($status)
+    private static function isReply($status)
     {
-        $text = $this->getStatusText($status);
+        $text = self::getStatusText($status);
         return substr(html_entity_decode($text), 0, 1) == "@";
     }
-
 }
