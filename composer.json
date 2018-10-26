@@ -19,5 +19,6 @@
         "psr-4": {
             "Buffer\\UpdateConverters\\": "Converters/"
         }
-    }
+    },
+    "version": "1.0.0"
 }
