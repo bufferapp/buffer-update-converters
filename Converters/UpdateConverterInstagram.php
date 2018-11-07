@@ -8,7 +8,7 @@ class UpdateConverterInstagram implements NativeUpdateConverter
 {
     public static function convertFromSocialNetwork($post)
     {
-        $update_attrs = [
+        $updateAttrs = [
             'service_update_id' => $post['id'],
             'text' => html_entity_decode($post['caption']),
             'due_at' => new UTCDateTime(1000*strtotime($post['timestamp'])),
@@ -19,7 +19,7 @@ class UpdateConverterInstagram implements NativeUpdateConverter
         ];
 
         if ($post['media_type'] === 'VIDEO') {
-            $update_attrs['media'] = [
+            $updateAttrs['media'] = [
                 'video' => [
                     'details' => [
                         'transcoded_location' => $post['media_url']
@@ -31,21 +31,21 @@ class UpdateConverterInstagram implements NativeUpdateConverter
                 'thumbnail' => $post['media_url']
             ];
         } else {
-            $update_attrs['media'] = [
+            $updateAttrs['media'] = [
                 'photo' => $post['media_url'],
                 'thumbnail' => $post['media_url'],
             ];
             if ($post['media_type'] === 'CAROUSEL_ALBUM') {
                 foreach ($post['children'] as $media) {
-                    $extra_media = [
+                    $extraMedia = [
                         'photo' => $media,
                         'thumbnail' => $media
                     ];
-                    $update_attrs['extra_media'][] = $extra_media;
+                    $updateAttrs['extra_media'][] = $extraMedia;
                 }
-            } 
+            }
         }
 
-        return $update_attrs;
+        return $updateAttrs;
     }
 }
