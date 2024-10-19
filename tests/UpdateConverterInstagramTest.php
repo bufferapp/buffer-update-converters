@@ -3,9 +3,8 @@
 namespace Buffer\UpdateConverters;
 
 use MongoDB\BSON\UTCDateTime;
-use MongoDB\BSON\ObjectId;
 
-class UpdateConverterInstagramTest extends \PHPUnit_Framework_TestCase
+class UpdateConverterInstagramTest extends \PHPUnit\Framework\TestCase
 {
     /**
      * @test

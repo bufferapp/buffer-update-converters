@@ -4,7 +4,7 @@ namespace Buffer\UpdateConverters;
 
 use MongoDB\BSON\UTCDateTime;
 
-class UpdateConverterTwitterTest extends \PHPUnit_Framework_TestCase
+class UpdateConverterTwitterTest extends \PHPUnit\Framework\TestCase
 {
     public function testFromTwitterStatus()
     {
