@@ -5,7 +5,7 @@ namespace Buffer\UpdateConverters;
 use MongoDB\BSON\UTCDateTime;
 use MongoDB\BSON\ObjectId;
 
-class UpdateConverterFacebookTest extends \PHPUnit_Framework_TestCase
+class UpdateConverterFacebookTest extends \PHPUnit\Framework\TestCase
 {
     public function testFromFacebookStatus()
     {
